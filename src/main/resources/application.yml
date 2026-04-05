@@ -1,0 +1,59 @@
+spring:
+  application:
+      name:secure-task-app
+
+  # ── PostgreSQL Database ──────────────────────────────
+  datasource:
+    url: jdbc:postgresql://localhost:5432/secure-task-DB
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  # ── JPA / Hibernate ──────────────────────────────────
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+ #       dialect: org.hibernate.dialect.postgreSQLDialect
+
+  # ── Run schema.sql on startup ─────────────────────────
+  sql:
+     init:
+       mode: always
+
+
+ # ── OAuth2 Client (Google) ────────────────────────────
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+             client-id:  ${GOOGLE_CLIENT_ID}   #secure-task-oauth-client-abcd12       # 🔑 From Google Cloud Console
+             client-secret: ${GOOGLE_CLIENT_SECRET}  # 🔑 From Google Cloud Console
+
+             scope:
+               - email
+               - profile
+             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}" # OAuth login url:  http://localhost:8080/login/oauth2/code/google
+
+    # ── JWT Settings ─────────────────────────────────────────
+  # 🔑 Use a strong random secret (at least 256-bit / 32 characters)
+jwt:
+ secret: MyVerySecretKeyForJWTTokenGenerationSecure123
+ expiration-ms: 86400000 # 24 hr in milliseconds
+
+# ── Server Port ──────────────────────────────────────────
+server:
+  port: 8080
+
+# ── Actuator ─────────────────────────────────────────────
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+
+
