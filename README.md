@@ -1,5 +1,5 @@
 # spring-security-practice
-spring-security-practice
+
 # 🔐 Secure Task App
 
 A production-grade **REST API** built with **Spring Boot 3.2** demonstrating all major features of **Spring Security 6** — JWT authentication, Google OAuth2 login, BCrypt password hashing, and Role-Based Access Control (RBAC).
